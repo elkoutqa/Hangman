@@ -1,5 +1,19 @@
-Name	Difficuly	Win/Lose	Number of Guess
-John	medium	lose	0
-John	medium	lose	0
-John	medium	lose	0
-John	medium	lose	0
+Name	Difficulty	Win/Lose	Number of Guesses Left
+John	easy	win	1
+John	easy	win	3
+John	easy	lose	0
+John	easy	lose	0
+John	easy	lose	0
+John	easy	win	2
+John	easy	lose	0
+John	easy	lose	0
+John	easy	lose	0
+John	easy	lose	0
+John	easy	win	2
+John	easy	lose	0
+John	easy	lose	0
+John	easy	lose	0
+John	easy	lose	0
+John	easy	win	3
+John	easy	lose	0
+John	easy	lose	0

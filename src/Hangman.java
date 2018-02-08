@@ -16,69 +16,27 @@ public class Hangman {
 	static ArrayList<Character> wordStorage = new ArrayList<>();
 	static ArrayList<Character> progressStorage = new ArrayList<>();
 	static ArrayList<Character> letterGuessStorage = new ArrayList<>();
+	static ArrayList<String> wordDatabase = new ArrayList<>();
 	
-	static ArrayList<String> easyWords = new ArrayList<>();
-	static ArrayList<String> mediumWords = new ArrayList<>();
-	static ArrayList<String> hardWords = new ArrayList<>();
-		
 	public static void main(String[] args) {
-		word = pickWord("medium");
+		word = pickWord("easy");
 		wordToArray(word);
 		runHangman();
 		
-		scoreboard();
-		//write();
+		//createScoreboard();
 	}
 	
-	public static void write() {
-		
-		FileWriter file;
-		BufferedWriter writer;
-		
-		try {
-			
-			file = new FileWriter("C:\\Users\\Admin\\Desktop\\eclipse-workspace\\Hangman\\scoreboard.txt", true); 
-			writer = new BufferedWriter(file);
-			
-			writer.write("Name\tDifficuly\tWin/Lose\tNumber of Guess");
-			writer.newLine();
-			
-			//file.close();
-			writer.close();
-			
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
-		}
-
-	public static void scoreboard() {
-		
-		BufferedWriter writer = null;
-		FileWriter file1;
+	public static void createScoreboard() {
 		
 		try {
 			File file = new File("scoreboard.txt");
-			if (file.createNewFile()) {
-				System.out.println("File created");
-				file1 = new FileWriter(file, true);
-				writer = new BufferedWriter(file1);
-				writer.write("Name\tDifficuly\tWin/Lose\tNumber of Guess");
-				writer.newLine();
-			} else {
-				System.out.println("File not created");
-			}
-			
-			writer.close();
-			
+			file.createNewFile();
 		}
 			 catch (IOException e) {
 		    		System.out.println("Exception Occurred:");
 			        e.printStackTrace();
 			  }
 	}
-	
 	
 	public static String pickWord(String difficulty) {
 		
@@ -97,30 +55,25 @@ public class Hangman {
 
 			int wordLength;
 			while (line!= null) {
-				wordLength = line.length();
 				
 				line = line.toLowerCase();
 				line = line.replaceAll("[^a-zA-Z0-9]", ""); 
 				
-				if (wordLength >=3 && wordLength<=5) {
-					hardWords.add(line);
-				} else if (wordLength >5 && wordLength <= 7) {
-					mediumWords.add(line);
-				} else if (wordLength >7) {
-					easyWords.add(line);
+				wordLength = line.length();
+				
+				if (wordLength > 2 && wordLength < 6) {
+					wordDatabase.add(line);
+				} else if (wordLength > 5 && wordLength < 8) {
+					wordDatabase.add(line);
+				} else if (wordLength > 7) {
+					wordDatabase.add(line);
 				}
 		
 				line = reader.readLine();
 			}
 			
-			if (difficulty == "easy") {
-				word = easyWords.get(random.nextInt(easyWords.size()));
-			} else if (difficulty == "medium") {
-				word = mediumWords.get(random.nextInt(mediumWords.size()));
-			} else if (difficulty == "hard") {
-				word = hardWords.get(random.nextInt(hardWords.size()));
-			}
-			
+			word = wordDatabase.get(random.nextInt(wordDatabase.size()));
+
 			file.close();
 			reader.close();
 			
@@ -128,9 +81,7 @@ public class Hangman {
 			e.printStackTrace();
 			
 		}
-		
 
-		
 		return word;
 	}
 	
@@ -164,7 +115,7 @@ public class Hangman {
 		Scanner scanner = new Scanner(System.in);
 		while (test == false) {
 
-			System.out.println("Letter Guess: ");
+			System.out.println("Enter Letter Guess: ");
 			String letterGuess = scanner.nextLine();
 
 			letterAttempt(word, letterGuess);
@@ -173,8 +124,7 @@ public class Hangman {
 			
 		}
 		scanner.close();
-		
-		
+
 		try {
 			
 			file = new FileWriter("C:\\Users\\Admin\\Desktop\\eclipse-workspace\\Hangman\\scoreboard.txt", true); 
@@ -203,9 +153,16 @@ public class Hangman {
 		
 		char letterGuess = letter.charAt(0);
 		
+		
+		
 		if (letterGuess >='a' && letterGuess<='z') {
 		} else {
-			System.out.println(letterGuess+" is not a valid input, input must be a lower case letter.\n");
+			System.out.println(letter+" is not a valid input, input must be a single lower case letter.\n");
+			return 0;
+		}
+		
+		if (letter.length() != 1) {
+			System.out.println(letter+" is not a valid input, input must be a single lower case letter.\n");
 			return 0;
 		}
 		
@@ -263,7 +220,7 @@ public class Hangman {
 		}
 		
 		if (check) {
-			System.out.println("You win!");
+			System.out.println("YOU WIN!\nThe word was "+word);
 			return true;
 		}
 		else {
