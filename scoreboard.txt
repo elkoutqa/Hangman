@@ -1,0 +1,5 @@
+Name	Difficuly	Win/Lose	Number of Guess
+John	medium	lose	0
+John	medium	lose	0
+John	medium	lose	0
+John	medium	lose	0
